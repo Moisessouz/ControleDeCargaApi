@@ -221,9 +221,9 @@ namespace ControleDeCarga.Services.Usuario
             return resposta;
         }
 
-        public async Task<ResponseEntity<CreateUsuarioDto>> CreateNewUsuario(CreateUsuarioDto newUsuario)
+        public async Task<ResponseEntity<UsuarioDto>> CreateUsuario(string nome, string email, string tipoUsuario)
         {
-            var resposta = new ResponseEntity<CreateUsuarioDto> { Status = false };
+            var resposta = new ResponseEntity<UsuarioDto> { Status = false };
 
             try
             {
@@ -240,24 +240,21 @@ namespace ControleDeCarga.Services.Usuario
 
                     using (SqlCommand com = new SqlCommand(query, con))
                     {
-                        com.Parameters.AddWithValue("@Nome", newUsuario.Nome);
+                        com.Parameters.AddWithValue("@Nome", nome);
                         com.Parameters.AddWithValue("@Senha", senhaHash);
-                        com.Parameters.AddWithValue("@Email", newUsuario.Email);
-                        com.Parameters.AddWithValue("@TipoUsuario", newUsuario.TipoUsuario);
+                        com.Parameters.AddWithValue("@Email", email);
+                        com.Parameters.AddWithValue("@TipoUsuario", tipoUsuario);
 
                         var result = await com.ExecuteScalarAsync();
 
                         if (result != null && int.TryParse(result.ToString(), out int newUserId))
                         {
-                            resposta.Dados = new CreateUsuarioDto
+                            resposta.Dados = new UsuarioDto
                             {
                                 Id = newUserId,
-                                Nome = newUsuario.Nome,
-                                Email = newUsuario.Email,
+                                Nome = nome,
+                                Email = email,
                             };
-
-                            resposta.Mensagem = "Usuário cadastrado com sucesso! Senha enviada por e-mail.";
-                            resposta.Status = true;
 
                             // Enviar um e-mail com a senha temporária
                             //string assunto = "Seja bem-vindo(a) ao Sistema";
@@ -266,13 +263,8 @@ namespace ControleDeCarga.Services.Usuario
                             //      "Por favor, faça o login e redefina sua senha no primeiro acesso."; ;
                             //await _emailService.SendEmailAsync(newUsuario.Email, assunto, corpo);
 
-                            resposta.Dados = newUsuario;
-                            resposta.Mensagem = "Usuário criado com sucesso e e-mail enviado!";
+                            resposta.Mensagem = "Usuário criado com sucesso!";
                             resposta.Status = true;
-                        }
-                        else
-                        {
-                            resposta.Mensagem = "Erro ao cadastrar usuário.";
                         }
                     }
                 }
@@ -285,7 +277,7 @@ namespace ControleDeCarga.Services.Usuario
             return resposta;
         }
 
-        public async Task<ResponseEntity<UsuarioDto>> RedefinirSenha(int usuarioId, string newSenha)
+        public async Task<ResponseEntity<UsuarioDto>> ResetSenha(int usuarioId, string newSenha)
         {
             var resposta = new ResponseEntity<UsuarioDto>
             {

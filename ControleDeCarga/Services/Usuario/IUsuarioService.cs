@@ -8,9 +8,9 @@ namespace ControleDeCarga.Services.Usuario
     {
         Task<ResponseEntity<List<UsuarioDto>>> GetAllUsuarios();
         Task<ResponseEntity<UsuarioDto>> GetUsuarioById(int usuarioId);
-        Task<ResponseEntity<CreateUsuarioDto>> CreateNewUsuario(CreateUsuarioDto newUsuario);
+        Task<ResponseEntity<UsuarioDto>> CreateUsuario(string nome, string email, string tipoUsuario);
         Task<ResponseEntity<UsuarioDto>> Login(string email, string senha);
-        Task<ResponseEntity<UsuarioDto>> RedefinirSenha(int usuarioId, string newSenha);
+        Task<ResponseEntity<UsuarioDto>> ResetSenha(int usuarioId, string newSenha);
         Task<ActionResult<ResponseEntity<UsuarioDto>>> DeleteUsuario(int usuarioId);
     }
 }

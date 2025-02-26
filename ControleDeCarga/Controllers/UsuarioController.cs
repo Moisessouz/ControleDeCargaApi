@@ -41,18 +41,18 @@ namespace ControleDeCarga.Controllers
             return Ok(usuario);
         }
 
-        [HttpPost("CreateNewUsuario")]
-        public async Task<ActionResult<ResponseEntity<CreateUsuarioDto>>> CreateNewUsuario(CreateUsuarioDto newUsuario)
+        [HttpPost("CreateUsuario")]
+        public async Task<ActionResult<ResponseEntity<UsuarioDto>>> CreateUsuario(string nome, string email, string tipoUsuario)
         {
-            var usuarioEntity = await _usuarioInterface.CreateNewUsuario(newUsuario);
+            var usuarioEntity = await _usuarioInterface.CreateUsuario(nome, email,tipoUsuario);
 
             return Ok(usuarioEntity);
         }
 
-        [HttpPost("RedefinirSenha")]
-        public async Task<ActionResult<ResponseEntity<UsuarioDto>>> RedefinirSenha(int usuarioId, string newSenha)
+        [HttpPost("ResetSenha")]
+        public async Task<ActionResult<ResponseEntity<UsuarioDto>>> ResetSenha(int usuarioId, string newSenha)
         {
-            var usuarioEntity = await _usuarioInterface.RedefinirSenha(usuarioId, newSenha);
+            var usuarioEntity = await _usuarioInterface.ResetSenha(usuarioId, newSenha);
 
             return Ok(usuarioEntity);
         }

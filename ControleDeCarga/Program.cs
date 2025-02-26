@@ -1,6 +1,7 @@
 using ControleDeCarga.Data;
 using ControleDeCarga.Services.Email;
 using ControleDeCarga.Services.Senha;
+using ControleDeCarga.Services.Transportadora;
 using ControleDeCarga.Services.Usuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<SenhaService>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<ITransportadoraService, TransportadoraService>();
 
 
 var app = builder.Build();

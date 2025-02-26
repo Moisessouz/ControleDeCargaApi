@@ -1,4 +1,5 @@
 ﻿
+using ControleDeCarga.DTO.Transportadora;
 using System.Text.Json.Serialization;
 
 namespace ControleDeCarga.DTO.Usuario
